@@ -8,7 +8,7 @@ import {
 import { Observable, throwError } from 'rxjs';
 
 //Declaring the api url that will provide data for the client app
-const apiUrl = 'https://mymovieflix-3d9c07cffa0d.herokuapp.com';
+const apiUrl = 'https://mymovieflix-3d9c07cffa0d.herokuapp.com/';
 @Injectable({
   providedIn: 'root',
 })
@@ -156,23 +156,23 @@ export class FetchApiDataService {
 
   //get a user endpoint
   getOneUser(): Observable<any> {
-    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const username = localStorage.getItem('Username');
     const token = localStorage.getItem('token');
     return this.http
-      .get(apiUrl + `users/${users.Username}`, {
+      .get(apiUrl + 'users/' + username, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
       })
-      .pipe(catchError(this.handleError));
+      .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
   //edit user endpoint
   editUser(updatedUser: any): Observable<any> {
-    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = localStorage.getItem('token');
     return this.http
-      .put(apiUrl + `users/${users.Username}`, updatedUser, {
+      .put(apiUrl + 'users/' + user.Username, updatedUser, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
@@ -182,14 +182,13 @@ export class FetchApiDataService {
 
   //delete user endpoint
   deleteUser(): Observable<any> {
-    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = localStorage.getItem('token');
     return this.http
-      .delete(apiUrl + `users/${users.Username}`, {
+      .delete(apiUrl + 'users/' + user._id, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
-        responseType: 'text',
       })
       .pipe(catchError(this.handleError));
   }
