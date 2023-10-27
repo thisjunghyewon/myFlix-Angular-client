@@ -29,6 +29,7 @@ import { DirectorComponent } from './director/director.component';
 import { GenreComponent } from './genre/genre.component';
 
 import { RouterModule, Routes } from '@angular/router';
+import { NavigationComponent } from './navigation/navigation.component';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
@@ -48,6 +49,7 @@ const appRoutes: Routes = [
     MovieInfoComponent,
     DirectorComponent,
     GenreComponent,
+    NavigationComponent,
   ],
   imports: [
     BrowserModule,

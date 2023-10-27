@@ -1,3 +1,5 @@
+<app-navigation></app-navigation>
+
 <div class="profile-container">
   <div class="info-container ">
     <div class="info">
@@ -6,12 +8,12 @@
       <p>Email: {{user.Email}}</p>
 
       <h2>Favorite Movies</h2>
-      <div *ngIf="favoriteMovies.length === 0">
+      <div *ngIf="Favorite_movies.length === 0">
         <p>No favorites.</p>
       </div>
     </div>
     <mat-list>
-      <mat-list-item *ngFor="let movie of favoriteMovies">
+      <mat-list-item *ngFor="let movie of Favorite_movies">
         <img matListItemAvatar src="{{movie.ImagePath}}" />
         <span matListItemTitle>{{movie.Title}}</span>
       </mat-list-item>
