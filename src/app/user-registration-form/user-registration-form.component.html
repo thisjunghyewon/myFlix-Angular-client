@@ -1,4 +1,4 @@
-<mat-card>
+<!-- <mat-card>
   <mat-card-header>
     <mat-card-title>Sign Up!</mat-card-title>
   </mat-card-header>
@@ -19,6 +19,42 @@
     </form>
   </mat-card-content>
   <mat-card-actions>
+    <button mat-raised-button (click)="registerUser()" color="primary">
+      Sign Up
+    </button>
+  </mat-card-actions>
+</mat-card> -->
+<mat-card class="user-registration--container">
+  <mat-card-header class="user-registration--header">
+    <mat-card-title class="user-registration--title">Sign Up!</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content class="user-registration--content">
+    <form>
+      <!-- UserName Input -->
+      <mat-form-field>
+        <input matInput [(ngModel)]="userData.Username" placeholder="Username" type="string" name="Username" required />
+      </mat-form-field>
+
+      <!-- Password Input -->
+      <mat-form-field>
+        <input matInput [(ngModel)]="userData.Password" placeholder="Password" type="password" name="Password"
+          required />
+      </mat-form-field>
+
+      <!-- Email Input -->
+      <mat-form-field>
+        <input matInput [(ngModel)]="userData.Email" placeholder="Email" type="email" name="Email" required />
+      </mat-form-field>
+
+      <!-- Birthday Input -->
+      <mat-form-field>
+        <input matInput [(ngModel)]="userData.Birthday" placeholder="Birthday" type="date" name="Birthday" />
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions class="user-registration--actions">
     <button mat-raised-button (click)="registerUser()" color="primary">
       Sign Up
     </button>

@@ -11,11 +11,9 @@
     <mat-card-header>{{data.dialogContent[i]}}</mat-card-header>
   </div>
 </mat-card>
-<ng-template class="mat-card" #elseBlock>
-  <div>
-    <mat-card-title class="mat-card-title">{{data.dialogTitle}}</mat-card-title>
-    <mat-card-header>{{data.dialogContent}}</mat-card-header>
-  </div>
+<ng-template #elseBlock>
+  <mat-card-title>{{data.dialogTitle}}</mat-card-title>
+  <mat-card-header>{{data.dialogContent}}</mat-card-header>
 </ng-template>
 
 </html>

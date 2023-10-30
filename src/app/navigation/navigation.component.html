@@ -1,11 +1,9 @@
-<mat-toolbar color="primary">
-  <a mat-button (click)="toMovies()" target="_blank">myFlix</a>
-
-  <span class="spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="user profile button" (click)="toProfile()">
-    <mat-icon>Profile</mat-icon>
-  </button>
-  <button mat-icon-button (click)="toLogout()" class="example-icon" aria-label="logout button">
-    <mat-icon>logout</mat-icon>
-  </button>
+<mat-toolbar class="nav-bar">
+  <a mat-button (click)="navigateToMovieView()">All Movies</a>
+  <div class="user-actions--container">
+    <a mat-raised-button (click)="navigateToUserProfile()">{{this.username}}<mat-icon>account_circle</mat-icon></a>
+    <a mat-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </a>
+  </div>
 </mat-toolbar>

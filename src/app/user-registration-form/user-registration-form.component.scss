@@ -1,0 +1,31 @@
+.user-registration--container {
+  text-align: center;
+}
+
+.user-registration--header {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+
+  .user-registration--title {
+    font-size: 3rem;
+  }
+}
+
+.user-registration--content {
+  form {
+    mat-form-field {
+      margin: 0.25rem;
+    }
+  }
+}
+
+.user-registration--actions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  button {
+    text-transform: uppercase;
+  }
+}

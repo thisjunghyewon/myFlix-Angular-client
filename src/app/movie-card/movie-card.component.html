@@ -1,35 +1,27 @@
 <app-navigation></app-navigation>
-<div class="movie-view">
-  <mat-card *ngFor="let movie of movies;" class="movie-card">
-    <mat-card-header>
-      <mat-card-title>{{movie.Title}}</mat-card-title>
-      <mat-card-subtitle>Directed by: {{movie.Director.Name}}</mat-card-subtitle>
+
+<div class="movie-card--container">
+  <mat-card class="movie-card--wrapper" *ngFor="let movie of movies; let i=index">
+    <mat-card-header class="movie-card--header">
+      <mat-card-title class="movie-card--header-text movie-card--title">{{movie.Title}}</mat-card-title>
+      <mat-card-subtitle class="movie-card--header-text movie-card--subtitle">Directed by:
+        {{listDirectors(movie.Directors)}}</mat-card-subtitle>
     </mat-card-header>
-    <img class="imgbox" src={{movie.ImagePath}} alt={{movie.Title}} />
+    <mat-card-content class="movie-card--content">
+      <img class="movie-img" src={{movie.ImagePath}} alt={{movie.Title}} />
+    </mat-card-content>
     <mat-card-actions>
-      <button mat-button (click)="openGenre(movie.Genre.Name, movie.Genre.Description)" color="basic">
+      <button (click)="openGenreDialog(movie.Genre)" mat-button color="primary">
         Genre
       </button>
-      <button mat-button (click)="
-                openDirector(
-                  movie.Director.Name,
-                  movie.Director.Bio,
-                  movie.Director.Birth,
-                  movie.Director.Death                )
-              " color="basic">
+      <button (click)="openDirectorsDialog(movie.Directors)" mat-button color="primary">
         Director
       </button>
-      <button mat-button (click)="openSummary(movie.Title, movie.Description)" color="basic">
-        Description
+      <button (click)="openSynopsisDialog(movie.Description)" mat-button color="primary">
+        Synopsis
       </button>
-      <button mat-button class="mat-icon-button" *ngIf="!isFavoriteMovie(movie._id)" (click)="addToFavorites(movie._id)"
-        color="primary">
-        <mat-icon>favorite_border</mat-icon>
-      </button>
-      <button mat-button class="mat-flat-button" *ngIf="isFavoriteMovie(movie._id)" (click)="addToFavorites(movie._id)"
-        color="accent">
-        <mat-icon>favorite</mat-icon>
-      </button>
+      <mat-icon (click)="handleSetFavoriteMovie(movie._id)">{{user.Favorit_movies.includes(movie._id) ? "favorite" :
+        "favorite_border"}}</mat-icon>
     </mat-card-actions>
   </mat-card>
 </div>
