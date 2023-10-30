@@ -1,60 +1,61 @@
 <app-navigation></app-navigation>
 
-<div class="profile-container">
-  <div class="info-container ">
-    <div class="info">
-      <h1>Profile</h1>
-      <p>Username: {{user.Username}} </p>
-      <p>Email: {{user.Email}}</p>
+<div class="user-profile--main">
 
-      <h2>Favorite Movies</h2>
-      <div *ngIf="Favorite_movies.length === 0">
-        <p>No favorites.</p>
-      </div>
+  <!-- USER DETAILS SECTION -->
+  <div class="user-details--container">
+    <div class="user-details--header">
+      <h1>User Profile</h1>
     </div>
-    <mat-list>
-      <mat-list-item *ngFor="let movie of Favorite_movies">
-        <img matListItemAvatar src="{{movie.ImagePath}}" />
-        <span matListItemTitle>{{movie.Title}}</span>
-      </mat-list-item>
-    </mat-list>
+    <div class="user-details--content">
+      <p><b>Username:</b> {{user.Username}}</p>
+      <p><b>Email:</b> {{user.Email}}</p>
+    </div>
   </div>
 
+  <!-- UPDATE USER DETAILS SECTION -->
+  <div class="update-details--container">
+    <div class="update-details--header">
+      <h1>Update Profile</h1>
+    </div>
+    <div class="update-details-form--container">
+      <form>
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput [(ngModel)]="updatedUser.Username" placeholder="Username" name="Username" type="text">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="updatedUser.Email" placeholder="Email" name="Email" type="email">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput [(ngModel)]="updatedUser.Password" placeholder="Password" name="Password" type="password">
+        </mat-form-field>
+      </form>
 
-  <form>
-    <h1>Update Profile</h1>
+      <div class="update-details--actions">
+        <button mat-stroked-button (click)="updateUser()" color="primary">Update</button>
+        <button mat-raised-button (click)="deleteUser()" color="warn">Delete</button>
+      </div>
+    </div>
+  </div>
 
-    <br>
-
-    <mat-form-field class="item-b">
-      <mat-label> Username </mat-label>
-      <input matInput [(ngModel)]="userData.Username" type="text" name="Username">
-    </mat-form-field>
-
-    <mat-form-field class="item-c">
-      <mat-label>Password</mat-label>
-      <input matInput [(ngModel)]="userData.Password" type="password" name="Password" required>
-    </mat-form-field>
-
-    <mat-form-field class="item-d">
-      <mat-label>Email</mat-label>
-      <input matInput [(ngModel)]="userData.Email" type="email" name="Email">
-    </mat-form-field>
-
-    <mat-form-field class="item-e">
-      <mat-label>Birthday</mat-label>
-      <input matInput [(ngModel)]="userData.Birthday" type="date" name="Birthday">
-    </mat-form-field>
-
-    <br>
-
-    <button class="item-f" mat-raised-button color="primary" (click)="editUser()">
-      Update
-    </button>
-
-    <button class="item-g" mat-button color="warn" (click)="deleteUser()">
-      DELETE ACCOUNT
-    </button>
-  </form>
-
+  <!-- FAVORITE MOVIES -->
+  <div class="user-favorite-movies--container">
+    <div class="user-favorite-movies--header">
+      <h1>Favorite Movies</h1>
+    </div>
+    <div class="user-favorite-movies--content">
+      <mat-list class="favorite-movies--list" role="list">
+        <mat-list-item *ngFor="let movie of favoriteMovies" role="listitem">
+          <button mat-button [matMenuTriggerFor]="menu">{{movie.Title}}</button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openMovieDetailsDialog(movie)">Details</button>
+            <button mat-menu-item (click)="removeFromFavoriteMovies(movie)">Remove from favorites</button>
+          </mat-menu>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
 </div>

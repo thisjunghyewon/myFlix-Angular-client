@@ -1,25 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
 })
-export class NavigationComponent {
-  constructor(private router: Router) {}
+export class NavigationComponent implements OnInit {
+  public username: string = '';
 
-  ngOnInit(): void {}
+  constructor(public router: Router, public dialog: MatDialog) {}
 
-  toMovies(): void {
+  ngOnInit(): void {
+    this.username = JSON.parse(localStorage.getItem('user')!).Username;
+  }
+
+  navigateToMovieView(): void {
     this.router.navigate(['movies']);
   }
 
-  toProfile(): void {
-    this.router.navigate(['profile']);
+  navigateToUserProfile(): void {
+    this.router.navigate(['user-profile']);
   }
 
-  toLogout(): void {
+  logout(): void {
     this.router.navigate(['welcome']);
     localStorage.clear();
   }

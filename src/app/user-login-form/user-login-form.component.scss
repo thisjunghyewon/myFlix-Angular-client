@@ -1,0 +1,34 @@
+.user-login--container {
+  text-align: center;
+}
+
+.user-login--header {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+
+  .user-login--title {
+    font-size: 3rem;
+  }
+}
+
+.user-login--content {
+  form {
+    display: flex;
+    flex-direction: column;
+
+    mat-form-field {
+      margin: 0.25rem;
+    }
+  }
+}
+
+.user-login--actions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  button {
+    text-transform: uppercase;
+  }
+}

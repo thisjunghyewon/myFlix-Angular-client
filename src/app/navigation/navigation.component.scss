@@ -1,6 +1,10 @@
-.example-icon {
-  padding: 0 14px;
-}
-.spacer {
-  flex: 1 1 auto;
+.nav-bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin-bottom: 50px;
+  z-index: 9999;
+  border-bottom: solid 4px red;
+  display: flex;
+  justify-content: space-between;
 }
