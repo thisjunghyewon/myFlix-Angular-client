@@ -239,21 +239,21 @@ export class MovieCardComponent implements OnInit {
   //     }
   //   });
   // }
-  handleSetFavoriteMovie(MovieID: string): void {
-    if (this.user.Favorite_movies.includes(MovieID)) {
+  handleSetFavoriteMovie(movieId: string): void {
+    if (this.user.Favorite_movies.includes(movieId)) {
       this.fetchApiData
-        .deleteFavoriteMovie(this.user.Username, MovieID)
+        .deleteFavoriteMovie(this.user.Username, movieId)
         .subscribe((resp: any) => {
           this.user.Favorite_movies = this.user.Favorite_movies.filter(
-            (id: String) => id !== MovieID
+            (id: String) => id !== movieId
           );
           localStorage.setItem('user', JSON.stringify(this.user));
         });
     } else {
       this.fetchApiData
-        .addFavoriteMovie(this.user.Username, MovieID)
+        .addFavoriteMovie(this.user.Username, movieId)
         .subscribe((resp: any) => {
-          this.user.Favorite_movies.push(MovieID);
+          this.user.Favorite_movies.push(movieId);
           localStorage.setItem('user', JSON.stringify(this.user));
         });
     }

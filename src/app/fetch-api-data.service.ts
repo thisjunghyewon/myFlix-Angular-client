@@ -247,14 +247,14 @@ export class FetchApiDataService {
   //     )
   //     .pipe(map(this.extractResponseData), catchError(this.handleError));
   // }
-  addFavoriteMovie(Username: string, MovieID: string): Observable<any> {
+  addFavoriteMovie(Username: string, movieId: string): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: 'Bearer ' + token,
     });
 
     return this.http
-      .post(apiUrl + 'users/' + Username + '/movies/' + MovieID, null, {
+      .post(apiUrl + 'users/' + Username + '/movies/' + movieId, null, {
         headers,
         responseType: 'text',
       })
@@ -286,7 +286,7 @@ export class FetchApiDataService {
   //     })
   //     .pipe(map(this.extractResponseData), catchError(this.handleError));
   // }
-  deleteFavoriteMovie(Username: string, MovieID: string): Observable<any> {
+  deleteFavoriteMovie(Username: string, movieId: string): Observable<any> {
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const headers = new HttpHeaders({
@@ -294,7 +294,7 @@ export class FetchApiDataService {
     });
 
     return this.http
-      .delete(apiUrl + 'users/' + Username + '/movies/' + MovieID, {
+      .delete(apiUrl + 'users/' + Username + '/movies/' + movieId, {
         headers,
         responseType: 'text',
       })
@@ -306,9 +306,9 @@ export class FetchApiDataService {
    * @returns a boolean value that will check if the favorite movies array has the param of movieID
    * used in the movie-card component
    */
-  isFavoriteMovie(MovieID: string): boolean {
+  isFavoriteMovie(movieId: string): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user) return user.Favorite_movies.includes(MovieID);
+    if (user) return user.Favorite_movies.includes(movieId);
     return false;
   }
 
