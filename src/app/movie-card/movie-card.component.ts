@@ -65,11 +65,16 @@ export class MovieCardComponent implements OnInit {
    * @returns the movie's director
    */
   private findMoviesDirectors(movie: any): void {
-    let foundDirectors: any[] = [];
-    movie.Directors.forEach((director: any) => {
-      foundDirectors.push(this.directors.find((d) => d._id === director));
-    });
-    movie.Directors = foundDirectors;
+    if (!movie.Director) {
+      console.error('Director is undefined for movie:', movie);
+      return;
+    }
+    const foundDirector = this.directors.find((d) => d._id === movie.Director);
+    if (foundDirector) {
+      movie.Director = foundDirector;
+    } else {
+      console.error('Director not found for id:', movie.Director);
+    }
   }
   /**
    * @param movie
@@ -81,11 +86,11 @@ export class MovieCardComponent implements OnInit {
     movie.Genre = foundGenre;
   }
 
-  listDirectors(directors: any) {
-    return directors.map((director: any) => {
-      return director.Name;
-    });
-  }
+  // listDirectors(directors: any) {
+  //   return directors.map((director: any) => {
+  //     return director.Name;
+  //   });
+  // }
   /**
    * @param genre
    * the genre will be passed into the dialog when openend

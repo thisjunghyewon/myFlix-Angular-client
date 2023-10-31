@@ -5,7 +5,7 @@
     <mat-card-header class="movie-card--header">
       <mat-card-title class="movie-card--header-text movie-card--title">{{movie.Title}}</mat-card-title>
       <mat-card-subtitle class="movie-card--header-text movie-card--subtitle">Directed by:
-        {{listDirectors(movie.Directors)}}</mat-card-subtitle>
+        {{(movie.Director.Name)}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content class="movie-card--content">
       <img class="movie-img" src={{movie.ImagePath}} alt={{movie.Title}} />
@@ -20,8 +20,10 @@
       <button (click)="openSynopsisDialog(movie.Description)" mat-button color="primary">
         Synopsis
       </button>
-      <mat-icon (click)="handleSetFavoriteMovie(movie._id)">{{user.Favorit_movies.includes(movie._id) ? "favorite" :
-        "favorite_border"}}</mat-icon>
+      <mat-icon (click)="handleSetFavoriteMovie(movie._id)">
+        {{user?.Favorite_movies?.includes(movie._id) ? "favorite" : "favorite_border"}}</mat-icon>
+      <!-- <mat-icon (click)="handleSetFavoriteMovie(movie._id)">{{user.Favorit_movies.includes(movie._id) ? "favorite" :
+        "favorite_border"}}</mat-icon> -->
     </mat-card-actions>
   </mat-card>
 </div>
