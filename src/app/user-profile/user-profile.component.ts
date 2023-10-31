@@ -12,6 +12,7 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Router } from '@angular/router';
+
 // import { formatDate } from '@angular/common';
 import { MovieInfoSecondComponent } from '../movie-info-second/movie-info-second.component';
 
@@ -22,10 +23,9 @@ import { MovieInfoSecondComponent } from '../movie-info-second/movie-info-second
 })
 export class UserProfileComponent implements OnInit {
   user: any = {};
-  favoriteMovies: any[] = [];
+  Favorite_movies: any[] = [];
   updatedUser: any = {};
   movies: any[] = [];
-  // @Input() userData = { Username: '', Password: '', Email: '', Birthday: '' };
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -35,10 +35,9 @@ export class UserProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.getUser();
     if (localStorage.getItem('user') && localStorage.getItem('token')) {
       this.user = JSON.parse(localStorage.getItem('user')!);
-      this.fetchFavoriteMovies();
+      this.getFavoriteMovies();
     } else {
       this.router.navigate(['welcome']);
     }
@@ -47,60 +46,18 @@ export class UserProfileComponent implements OnInit {
   /**
    * @returns the user's favorite movies list
    */
-  fetchFavoriteMovies(): void {
-    this.fetchApiData.getAllMovies().subscribe((resp: any) => {
-      const movies = resp;
-      movies.forEach((movie: any) => {
-        if (this.user.Favorite_movies.includes(movie._id)) {
-          this.favoriteMovies.push(movie);
-        }
+  getFavoriteMovies(): void {
+    this.fetchApiData
+      .getFavoriteMovies(this.user.Username || '')
+      .subscribe((favoriteMoviesIDs: any) => {
+        this.fetchApiData.getAllMovies().subscribe((movies: any) => {
+          // filter the full movies objects array against the array of favorite movies id of the user
+          this.Favorite_movies = movies.filter((movie: any) =>
+            favoriteMoviesIDs.includes(movie._id)
+          );
+        });
       });
-    });
   }
-
-  /**
-   * Username and token will be taken from localstorage to send a request to the api for the users information
-   * User profile page will then be able to display the users favorite movies list and their username, name, email, etc.
-   */
-
-  // getUser(): void {
-  //   this.fetchApiData.getOneUser().subscribe((response: any) => {
-  //     this.user = response;
-  //     this.userData.Username = this.user.Username;
-  //     this.userData.Email = this.user.Email;
-  //     this.user.Birthday = formatDate(
-  //       this.user.Birthday,
-  //       'yyyy-MM-dd',
-  //       'en-US',
-  //       'UTC+0'
-  //     );
-
-  //     this.fetchApiData.getAllMovies().subscribe((response: any) => {
-  //       this.Favorite_movies = response.filter(
-  //         (m: { _id: any }) => this.user.Favorite_movies.indexOf(m._id) >= 0
-  //       );
-  //     });
-  //   });
-  // }
-
-  // editUser(): void {
-  //   this.fetchApiData.editUser(this.userData).subscribe(
-  //     (data) => {
-  //       localStorage.setItem('user', JSON.stringify(data));
-  //       localStorage.setItem('Username', data.Username);
-  //       console.log(data);
-  //       this.snackBar.open('User has been updated', 'OK', {
-  //         duration: 2000,
-  //       });
-  //       window.location.reload();
-  //     },
-  //     (result) => {
-  //       this.snackBar.open(result, 'OK', {
-  //         duration: 2000,
-  //       });
-  //     }
-  //   );
-  // }
 
   /**
    * updates the user's information on form submission
@@ -125,17 +82,6 @@ export class UserProfileComponent implements OnInit {
    * deletes the user's account and navigates the user back to the login/sign up page
    */
   deleteUser(): void {
-    // if (confirm('are you sure?')) {
-    //   this.router.navigate(['welcome']).then(() => {
-    //     this.snackBar.open('You have successfully deleted your account', 'OK', {
-    //       duration: 2000,
-    //     });
-    //   });
-    //   this.fetchApiData.deleteUser().subscribe((result) => {
-    //     console.log(result);
-    //     localStorage.clear();
-    //   });
-    // }
     this.fetchApiData.deleteUser(this.user.Username).subscribe(
       (resp: any) => {
         localStorage.removeItem('user');
