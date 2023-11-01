@@ -48,7 +48,7 @@
     </div>
     <div class="user-favorite-movies--content">
       <mat-list class="favorite-movies--list" role="list">
-        <mat-list-item *ngFor="let movie of favoriteMovies" role="listitem">
+        <mat-list-item *ngFor="let movie of Favorite_movies" role="listitem">
           <button mat-button [matMenuTriggerFor]="menu">{{movie.Title}}</button>
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="openMovieDetailsDialog(movie)">Details</button>

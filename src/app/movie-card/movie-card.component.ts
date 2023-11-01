@@ -49,13 +49,6 @@ export class MovieCardComponent implements OnInit {
   /**
    * @returns all movies
    */
-  // getMovies(): void {
-  //   this.fetchApiData.getAllMovies().subscribe((resp: any) => {
-  //     this.movies = resp;
-  //     console.log(this.movies);
-  //     return this.movies;
-  //   });
-  // }
   fetchMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
@@ -66,37 +59,38 @@ export class MovieCardComponent implements OnInit {
       return this.movies;
     });
   }
+
+  /**
+   * @param movie
+   * @returns the movie's director
+   */
   private findMoviesDirectors(movie: any): void {
-    let foundDirectors: any[] = [];
-    movie.Directors.forEach((director: any) => {
-      foundDirectors.push(this.directors.find((d) => d._id === director));
-    });
-    movie.Directors = foundDirectors;
+    if (!movie.Director) {
+      console.error('Director is undefined for movie:', movie);
+      return;
+    }
+    const foundDirector = this.directors.find((d) => d._id === movie.Director);
+    if (foundDirector) {
+      movie.Director = foundDirector;
+    } else {
+      console.error('Director not found for id:', movie.Director);
+    }
   }
   /**
    * @param movie
    * @returns the movie's genre
    */
-  // openGenre(name: string, description: string): void {
-  //   this.dialog.open(GenreComponent, {
-  //     data: {
-  //       Name: name,
-  //       Description: description,
-  //     },
-  //     width: '400px',
-  //   });
-  // }
   private findMoviesGenre(movie: any): void {
     let foundGenre: any;
     foundGenre = this.genres.find((g) => g._id === movie.Genre);
     movie.Genre = foundGenre;
   }
 
-  listDirectors(directors: any) {
-    return directors.map((director: any) => {
-      return director.Name;
-    });
-  }
+  // listDirectors(directors: any) {
+  //   return directors.map((director: any) => {
+  //     return director.Name;
+  //   });
+  // }
   /**
    * @param genre
    * the genre will be passed into the dialog when openend
@@ -111,27 +105,6 @@ export class MovieCardComponent implements OnInit {
     dialogConfig.width = '500px';
     this.dialog.open(MovieInfoSecondComponent, dialogConfig);
   }
-
-  /**
-   * @param movie
-   * @returns the movie's director
-   */
-  // openDirector(
-  //   name: string,
-  //   bio: string,
-  //   birthday: string,
-  //   death: string
-  // ): void {
-  //   this.dialog.open(DirectorComponent, {
-  //     data: {
-  //       Name: name,
-  //       Bio: bio,
-  //       Birth: birthday,
-  //       Death: death,
-  //     },
-  //     width: '400px',
-  //   });
-  // }
 
   /**
    * @param directors
@@ -156,15 +129,6 @@ export class MovieCardComponent implements OnInit {
    * @param description
    * param data will be passed into the dialog when opened
    */
-  // openSummary(title: string, description: string): void {
-  //   this.dialog.open(MovieInfoComponent, {
-  //     data: {
-  //       Title: title,
-  //       Description: description,
-  //     },
-  //     width: '400px',
-  //   });
-  // }
   openSynopsisDialog(description: any): void {
     this.dialog.closeAll();
     const dialogConfig = new MatDialogConfig();
@@ -177,83 +141,25 @@ export class MovieCardComponent implements OnInit {
   }
 
   /**
-   * @param MovieID
+   * @param movieId
    * will set the selected movie as one of the user's favorites
    */
-  // getFavorites(): void {
-  //   this.fetchApiData.getOneUser().subscribe(
-  //     (resp: any) => {
-  //       if (resp.user && resp.user.Favorite_movies) {
-  //         this.favorites = resp.user.Favorite_movies;
-  //       } else {
-  //         this.favorites = []; // Set an empty array if data is not available
-  //       }
-  //     },
-  //     (error: any) => {
-  //       console.error('Error fetching user data:', error);
-  //       this.favorites = []; // Set an empty array on error as well
-  //     }
-  //   );
-  // }
 
-  // check if a movie is a user's favorite
-  // isFavoriteMovie(MovieID: string): boolean {
-  //   const user = JSON.parse(localStorage.getItem('user') || '{}');
-  //   return user.Favorite_movies.indexOf(MovieID) >= 0;
-  // }
-  // // add a movie to a user's favorites
-  // addToFavorites(id: string): void {
-  //   if (this.isFavoriteMovie(id)) {
-  //     // Movie is already a favorite, so remove it
-  //     this.removeFromFavorites(id);
-  //     /*   this.snackBar.open('Movie removed from favorites', 'OK', {
-  //     duration: 2000,
-  //   }); */
-  //   } else {
-  //     // Movie is not a favorite, so add it
-  //     this.fetchApiData.addFavoriteMovie(id).subscribe(() => {
-  //       this.snackBar.open('Movie added to favorites', 'OK', {
-  //         duration: 2000,
-  //       });
-  //       this.getFavorites();
-  //     });
-  //   }
-  // }
-
-  // // Removes a movie from a user's favorites
-  // removeFromFavorites(id: string): void {
-  //   console.log(id);
-  //   this.fetchApiData.deleteFavoriteMovie(id).subscribe(() => {
-  //     this.snackBar.open('Movie removed from favorites', 'OK', {
-  //       duration: 2000,
-  //     });
-
-  //     const username = localStorage.getItem('Username');
-  //     if (username !== null) {
-  //       // Fetch the updated favorites data
-  //       this.fetchApiData
-  //         .getFavoriteMovies(username)
-  //         .subscribe((favorites: any) => {
-  //           this.favorites = favorites;
-  //         });
-  //     }
-  //   });
-  // }
-  handleSetFavoriteMovie(MovieID: string): void {
-    if (this.user.Favorite_movies.includes(MovieID)) {
+  handleSetFavoriteMovie(movieId: string): void {
+    if (this.user.Favorite_movies.includes(movieId)) {
       this.fetchApiData
-        .deleteFavoriteMovie(this.user.Username, MovieID)
+        .deleteFavoriteMovie(this.user.Username, movieId)
         .subscribe((resp: any) => {
           this.user.Favorite_movies = this.user.Favorite_movies.filter(
-            (id: String) => id !== MovieID
+            (id: String) => id !== movieId
           );
           localStorage.setItem('user', JSON.stringify(this.user));
         });
     } else {
       this.fetchApiData
-        .addFavoriteMovie(this.user.Username, MovieID)
+        .addFavoriteMovie(this.user.Username, movieId)
         .subscribe((resp: any) => {
-          this.user.Favorite_movies.push(MovieID);
+          this.user.Favorite_movies.push(movieId);
           localStorage.setItem('user', JSON.stringify(this.user));
         });
     }
