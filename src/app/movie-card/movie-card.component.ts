@@ -102,27 +102,39 @@ export class MovieCardComponent implements OnInit {
       dialogTitle: genre.Name,
       dialogContent: genre.Description,
     };
+    // dialogConfig.width = '500px';
+    // this.dialog.open(MovieInfoSecondComponent, dialogConfig);
+    console.log('dialogConfig: ', dialogConfig.data);
+
     dialogConfig.width = '500px';
-    this.dialog.open(MovieInfoSecondComponent, dialogConfig);
+    this.dialog.open(MovieInfoSecondComponent, {
+      data: dialogConfig.data,
+      width: dialogConfig.width,
+    });
   }
 
   /**
-   * @param directors
+   * @param director
    * the directors will be passed into the dialog when openend
    */
-  openDirectorsDialog(directors: any): void {
+  openDirectorsDialog(director: any): void {
     this.dialog.closeAll();
+    console.log('dialog: ', director);
+
     const dialogConfig = new MatDialogConfig();
-    const directorNames = directors.map((director: any) => director.Name);
-    const directorBios = directors.map((director: any) => director.Bio);
-    const directorBirth = directors.map((director: any) => director.Birth);
-    const directorDeath = directors.map((director: any) => director.Death);
+    const directorName = director.Name;
+    const directorBio = director.Bio;
+    const directorBirth = director.Birth;
+    const directorDeath = director.Death;
     dialogConfig.data = {
-      dialogTitle: directorNames,
-      dialogContent: { directorBios, directorBirth, directorDeath },
+      dialogTitle: directorName,
+      dialogContent: { directorBio, directorBirth, directorDeath },
     };
     dialogConfig.width = '500px';
-    this.dialog.open(MovieInfoComponent, dialogConfig);
+    this.dialog.open(MovieInfoComponent, {
+      data: dialogConfig.data,
+      width: dialogConfig.width,
+    });
   }
 
   /**

@@ -5,17 +5,22 @@
   <title>Movie Information</title>
 </head>
 
-<mat-card *ngIf="data.dialogTitle.length > 1; else elseBlock">
-  <div *ngFor="let dialogTitle of data.dialogTitle; let i=index">
-    <mat-card-title>{{dialogTitle}}</mat-card-title>
-    <mat-card-header>{{data.dialogContent[i]}}</mat-card-header>
+<mat-card>
+  <div>
+    <mat-card-title>{{data.dialogTitle}}</mat-card-title>
+    <mat-card-header><b>Bio: </b> {{data.dialogContent.directorBio}}</mat-card-header>
+    <br />
+    <mat-card-header><b>Year of birth: </b> {{ data.dialogContent.directorBirth }}</mat-card-header>
+    <br />
+    <mat-card-header><b>Year of Death: </b> {{ data.dialogContent.directorDeath }}</mat-card-header>
   </div>
 </mat-card>
-<ng-template class="mat-card" #elseBlock>
+<!-- <ng-template class="mat-card" #elseBlock>
   <div>
     <mat-card-title class="mat-card-title">{{data.dialogTitle}}</mat-card-title>
-    <mat-card-header>{{data.dialogContent}}</mat-card-header>
+    <mat-card-header>
+      
   </div>
-</ng-template>
+</ng-template> -->
 
 </html>
